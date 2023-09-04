@@ -1,25 +1,55 @@
-# University Management Core Service
+# Book Listing Backend with Postgresql Prisma and Express
 
-## Resources
+## Live Link
 
-## Module-35:
-### Stater Repository: 
-[University Management Core Service Starter](https://github.com/Apollo-Level2-Web-Dev/university-management-core-service-starter)
+- [Live Link](https://example.com)
 
-### ER Diagram
-<img src="https://i.ibb.co/Ln2FttV/university-management-core-service-module-1.png" alt="ER Diagram"> </img>
+## Application Routes
 
-## Module-36:
-<img src="https://i.ibb.co/tJ4nt6T/Screenshot-2023-08-20-at-7-32-11-PM.png" alt="ER Diagram"> </img>
+### User
 
-## Module-37
-<img src="https://i.ibb.co/DV7Jwd8/university-management-core-service-Page-2-drawio.png" alt="ER Diagram"> </img>
+- **Signup**: `POST /api/v1/auth/signup`
+- **Get All Users**: `GET /api/v1/users`
+- **Get a Single User**: `GET /api/v1/users/6177a5b87d32123f08d2f5d4`
+  - Description: Retrieves a user by their ID from the database.
+- **Update a User**: `PATCH /api/v1/users/6177a5b87d32123f08d2f5d4`
+- **Delete a User**: `DELETE /api/v1/users/6177a5b87d32123f08d2f5d4`
+  - Description: Deletes a user by their ID from the database.
+- **Get User Profile**: `GET /api/v1/profile`
 
-## Module-38
-<img src="https://i.ibb.co/B2JhHD3/module-38.png" alt="ER Diagram"> </img>
+### Category
 
+- **Create a Category**: `POST /api/v1/categories/create-category`
+- **Get All Categories**: `GET /api/v1/categories`
+- **Get a Single Category**: `GET /api/v1/categories/6177a5b87d32123f08d2f5d4`
+  - Description: Retrieves a category by its ID from the database.
+- **Update a Category**: `PATCH /api/v1/categories/6177a5b87d32123f08d2f5d4`
+- **Delete a Category**: `DELETE /api/v1/categories/6177a5b87d32123f08d2f5d4`
+  - Description: Deletes a category by its ID from the database.
 
-- [API Documentation](https://documenter.getpostman.com/view/26694209/2s9Xy5NrFU)
+### Books
 
+- **Create a Book**: `POST /api/v1/books/create-book`
+- **Get All Books**: `GET /api/v1/books`
+- **Get Books by Category**: `GET /api/v1/books/:categoryId/category`
+  - Description: Retrieves books belonging to a specific category.
+- **Get a Single Book**: `GET /api/v1/books/:id`
+  - Description: Retrieves a book by its ID from the database.
+- **Update a Book**: `PATCH /api/v1/books/:id`
+- **Delete a Book**: `DELETE /api/v1/books/:id`
+  - Description: Deletes a book by its ID from the database.
 
-# ums-postgresql-prisma-a8
+### Orders
+
+- **Create an Order**: `POST /api/v1/orders/create-order`
+- **Get All Orders**: `GET /api/v1/orders`
+- **Get a Single Order**: `GET /api/v1/orders/:orderId`
+  - Description: Retrieves an order by its ID from the database.
+
+## Usage
+
+Provide instructions on how to use these endpoints, including any required headers or request payloads.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).

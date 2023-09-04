@@ -1,5 +1,5 @@
 {
-  "name": "university-management-core-service",
+  "name": "book-listing-backend-with-postgresql-prisma-express",
   "version": "1.0.0",
   "description": "",
   "main": "src/server.ts",
