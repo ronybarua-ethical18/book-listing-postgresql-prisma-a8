@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "D:\\Corexlab\\assignments\\a8\\ums-postgresql-prisma\\logs\\winston\\successes\\.b852fc848f617e1bacf08daaee8967b8e4548518-audit.json",
+    "files": [
+        {
+            "date": 1693839423871,
+            "name": "D:\\Corexlab\\assignments\\a8\\ums-postgresql-prisma\\logs\\winston\\successes\\phu-2023-04-09-20-success.log",
+            "hash": "707e766e4ba8f1c964839bee60029016027137511d69c3fbce00ed9d29daad6c"
+        }
+    ],
+    "hashType": "sha256"
+}
