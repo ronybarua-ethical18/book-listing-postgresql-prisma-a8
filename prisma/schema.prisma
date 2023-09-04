@@ -58,7 +58,7 @@ model Order {
   userId       String
   user         User          @relation(fields: [userId], references: [id])
   status       OrderStatuses @default(pending)
-  created      DateTime
+  createdAt    DateTime @default(now())
 }
 
 enum OrderStatuses {

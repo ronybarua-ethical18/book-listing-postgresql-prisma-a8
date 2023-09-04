@@ -14,6 +14,12 @@ router.get(
   auth(ENUM_USER_ROLE.ADMIN),
   userController.getSingleUser
 )
+router.get(
+  '/profile',
+  auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.CUSTOMER),
+  userController.getMyProfile
+)
+
 router.patch(
   '/:userId',
   auth(ENUM_USER_ROLE.ADMIN),
