@@ -43,12 +43,12 @@
 
 - **Create an Order**: `POST /api/v1/orders/create-order`
 - **Get All Orders**: `GET /api/v1/orders`
-- **Get a Single Order**: `GET /api/v1/orders/4b8623d7-bded-4e12-9aeb-ed780ed8df35`
+- **Get a Single Order**: `GET /api/v1/orders/a3133273-1cd7-44cd-a87c-67c46840e5bd`
   - Description: Retrieves an order by its ID from the database.
 
 ### Bonus Part
 
-- **Get single order by Id**: `POST /api/v1/orders/4b8623d7-bded-4e12-9aeb-ed780ed8df35`
+- **Get single order by Id**: `POST /api/v1/orders/a3133273-1cd7-44cd-a87c-67c46840e5bd`
 - **Get User Profile Data**: `GET /api/v1/users/profile`
 
 ## Usage
