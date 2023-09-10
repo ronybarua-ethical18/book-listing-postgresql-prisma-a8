@@ -32,45 +32,50 @@ const createBook = (data) => __awaiter(void 0, void 0, void 0, function* () {
     return book;
 });
 const getAllBooks = (filters, options) => __awaiter(void 0, void 0, void 0, function* () {
-    const { limit, skip, page } = paginationHelper_1.paginationHelpers.calculatePagination(options);
-    const { searchTerm } = filters, filterData = __rest(filters, ["searchTerm"]);
-    console.log('filters', filters);
+    const { limit, skip, page, sortBy, sortOrder } = paginationHelper_1.paginationHelpers.calculatePagination(options);
+    const { searchTerm, category } = filters, filterData = __rest(filters, ["searchTerm", "category"]);
     const andConditions = [];
     if (searchTerm) {
-        andConditions.push({
-            OR: book_constants_1.booksSearchableFields.map(field => ({
-                [field]: {
-                    contains: searchTerm,
-                    mode: 'insensitive',
-                },
-            })),
-        });
+        const searchableFieldsConditions = book_constants_1.booksSearchableFields.map(field => ({
+            [field]: {
+                contains: searchTerm,
+                mode: 'insensitive',
+            },
+        }));
+        andConditions.push({ OR: searchableFieldsConditions });
     }
-    if (Object.keys(filterData).length > 0) {
-        andConditions.push({
-            AND: Object.keys(filterData).map((key) => ({
-                [key]: {
-                    equals: filterData[key],
-                },
-            })),
-        });
+    if (filterData.minPrice !== undefined || filterData.maxPrice !== undefined) {
+        const priceConditions = {};
+        if (filterData.minPrice !== undefined) {
+            priceConditions.gte = Number(filterData.minPrice);
+        }
+        if (filterData.maxPrice !== undefined) {
+            priceConditions.lte = Number(filterData.maxPrice);
+        }
+        andConditions.push({ price: priceConditions });
+    }
+    if (category) {
+        andConditions.push({ category: { id: category } });
+    }
+    const orderBy = {};
+    if (sortBy) {
+        orderBy[sortBy] = sortOrder === 'asc' ? 'asc' : 'desc';
     }
     const whereConditions = andConditions.length > 0 ? { AND: andConditions } : {};
-    const books = yield prisma_1.default.book.findMany({
-        skip,
-        take: limit,
-        where: whereConditions,
-        include: {
-            category: true,
-        },
-    });
-    const totals = yield prisma_1.default.book.count({ where: whereConditions });
+    const [books, totals] = yield Promise.all([
+        prisma_1.default.book.findMany({
+            skip,
+            take: limit,
+            where: whereConditions,
+            include: {
+                category: true,
+            },
+            orderBy,
+        }),
+        prisma_1.default.book.count({ where: whereConditions }),
+    ]);
     return {
-        meta: {
-            page,
-            limit,
-            totals,
-        },
+        meta: { page, limit, totals },
         data: books,
     };
 });

@@ -6,11 +6,14 @@ exports.booksSearchableFields = [
     'author',
     'genre',
     'publicationDate',
-    'categoryId',
+    'categoryId'
 ];
 exports.bookFilterableFields = [
     'searchTerm',
     'author',
     'genre',
     'publicationDate',
+    'minPrice',
+    'maxPrice',
+    'category'
 ];
