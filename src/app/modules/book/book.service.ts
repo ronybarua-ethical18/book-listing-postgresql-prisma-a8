@@ -13,55 +13,64 @@ const getAllBooks = async (
   filters: IBookFieldSearchRequest,
   options: IPaginationOptions
 ): Promise<any> => {
-  const { limit, skip, page } = paginationHelpers.calculatePagination(options);
-  const { searchTerm, ...filterData } = filters;
-
-  console.log('filters', filters);
+  const { limit, skip, page, sortBy, sortOrder } =
+    paginationHelpers.calculatePagination(options);
+  const { searchTerm, category, ...filterData } = filters;
 
   const andConditions = [];
 
   if (searchTerm) {
-    andConditions.push({
-      OR: booksSearchableFields.map(field => ({
-        [field]: {
-          contains: searchTerm,
-          mode: 'insensitive',
-        },
-      })),
-    });
+    const searchableFieldsConditions = booksSearchableFields.map(field => ({
+      [field]: {
+        contains: searchTerm,
+        mode: 'insensitive',
+      },
+    }));
+
+    andConditions.push({ OR: searchableFieldsConditions });
   }
 
-  if (Object.keys(filterData).length > 0) {
-    andConditions.push({
-      AND: Object.keys(filterData).map((key) => ({
-        [key]: {
-          equals: (filterData as any)[key],
-        },
-      })),
-    });
+  if (filterData.minPrice !== undefined || filterData.maxPrice !== undefined) {
+    const priceConditions: any = {};
+
+    if (filterData.minPrice !== undefined) {
+      priceConditions.gte = Number(filterData.minPrice);
+    }
+
+    if (filterData.maxPrice !== undefined) {
+      priceConditions.lte = Number(filterData.maxPrice);
+    }
+
+    andConditions.push({ price: priceConditions });
   }
-  
+
+  if (category) {
+    andConditions.push({ category: { id: category } });
+  }
+
+  const orderBy = {};
+  if (sortBy) {
+    (orderBy as any)[sortBy] = sortOrder === 'asc' ? 'asc' : 'desc';
+  }
 
   const whereConditions: Prisma.BookWhereInput =
     andConditions.length > 0 ? { AND: andConditions } : {};
 
-  const books = await prisma.book.findMany({
-    skip,
-    take: limit,
-    where: whereConditions,
-    include: {
-      category: true,
-    },
-  });
-
-  const totals = await prisma.book.count({ where: whereConditions });
+  const [books, totals] = await Promise.all([
+    prisma.book.findMany({
+      skip,
+      take: limit,
+      where: whereConditions,
+      include: {
+        category: true,
+      },
+      orderBy,
+    }),
+    prisma.book.count({ where: whereConditions }),
+  ]);
 
   return {
-    meta: {
-      page,
-      limit,
-      totals,
-    },
+    meta: { page, limit, totals },
     data: books,
   };
 };
