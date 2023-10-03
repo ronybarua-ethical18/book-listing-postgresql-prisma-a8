@@ -17,7 +17,7 @@ const createOrder = catchAsync(async (req: Request, res: Response) => {
 });
 
 const getAllOrders = catchAsync(async (req: Request, res: Response) => {
-  const result = await OrderService.getAllOrders();
+  const result = await OrderService.getAllOrders(req.user);
 
   sendResponse<Order[]>(res, {
     statusCode: 200,
@@ -27,17 +27,17 @@ const getAllOrders = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-const getOrdersByCustomer = catchAsync(async (req: Request, res: Response) => {
-  const requesPayload:any= req.user
-  const result = await OrderService.getOrdersByCustomer(requesPayload.userId);
+// const getOrdersByCustomer = catchAsync(async (req: Request, res: Response) => {
+//   const requesPayload:any= req.user
+//   const result = await OrderService.getOrdersByCustomer(requesPayload.userId);
 
-  sendResponse<Order[]>(res, {
-    statusCode: 200,
-    success: true,
-    message: 'All orders fetched successfully',
-    data: result,
-  });
-});
+//   sendResponse<Order[]>(res, {
+//     statusCode: 200,
+//     success: true,
+//     message: 'All orders fetched successfully',
+//     data: result,
+//   });
+// });
 
 const getSingleOrder = catchAsync(async (req: Request, res: Response) => {
   const requesPayload:any= req.user
@@ -56,5 +56,5 @@ export default {
   createOrder,
   getAllOrders,
   getSingleOrder,
-  getOrdersByCustomer
+  // getOrdersByCustomer
 };
