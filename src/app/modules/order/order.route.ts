@@ -6,7 +6,6 @@ const router = express.Router();
 
 router.post(
   '/create-order',
-  // validateRequest(BookValidation.createBookZodSchema),
   auth(ENUM_USER_ROLE.CUSTOMER),
   orderController.createOrder
 );
