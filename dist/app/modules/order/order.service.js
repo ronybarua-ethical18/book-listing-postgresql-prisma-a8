@@ -15,29 +15,41 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.OrderService = void 0;
 const prisma_1 = __importDefault(require("../../../shared/prisma"));
 const createOrder = (data, loggedUser) => __awaiter(void 0, void 0, void 0, function* () {
-    const order = yield prisma_1.default.order.create({ data: Object.assign(Object.assign({}, data), { userId: loggedUser }) });
+    const order = yield prisma_1.default.order.create({
+        data: Object.assign(Object.assign({}, data), { userId: loggedUser }),
+    });
     return order;
 });
-const getAllOrders = () => __awaiter(void 0, void 0, void 0, function* () {
-    const orders = yield prisma_1.default.order.findMany({});
+const getAllOrders = (loggedUser) => __awaiter(void 0, void 0, void 0, function* () {
+    const queries = (loggedUser === null || loggedUser === void 0 ? void 0 : loggedUser.role) === 'customer'
+        ? {
+            where: { userId: loggedUser === null || loggedUser === void 0 ? void 0 : loggedUser.userId },
+            include: {
+                user: true,
+            },
+        }
+        : {};
+    const orders = yield prisma_1.default.order.findMany(queries);
     return orders;
 });
 const getSingleOrder = (orderId, loggedUser) => __awaiter(void 0, void 0, void 0, function* () {
-    const order = yield prisma_1.default.order.findUnique({ where: { id: orderId, userId: loggedUser } });
+    const order = yield prisma_1.default.order.findUnique({
+        where: { id: orderId, userId: loggedUser },
+    });
     return order;
 });
-const getOrdersByCustomer = (userId) => __awaiter(void 0, void 0, void 0, function* () {
-    const books = yield prisma_1.default.order.findMany({
-        where: { userId: userId },
-        include: {
-            user: true,
-        },
-    });
-    return books;
-});
+// const getOrdersByCustomer = async (userId: string): Promise<Order[]> => {
+//   const books = await prisma.order.findMany({
+//     where: { userId: userId },
+//     include: {
+//       user: true,
+//     },
+//   });
+//   return books;
+// };
 exports.OrderService = {
     createOrder,
     getAllOrders,
     getSingleOrder,
-    getOrdersByCustomer
+    // getOrdersByCustomer,
 };

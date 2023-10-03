@@ -31,24 +31,24 @@
 
 - **Create a Book**: `POST /api/v1/books/create-book`
 - **Get All Books**: `GET /api/v1/books`
-- **Get Books by Category**: `GET /api/v1/books/05903153-f83e-4670-931c-5a594ad98682/category`
+- **Get Books by Category**: `GET /api/v1/books/a212aa85-cb71-4995-aec6-d4cc23eaf9f6/category`
   - Description: Retrieves books belonging to a specific category.
-- **Get a Single Book**: `GET /api/v1/books/100d03d0-154e-4e86-a9c9-71a2a3895fa9`
+- **Get a Single Book**: `GET /api/v1/books/a212aa85-cb71-4995-aec6-d4cc23eaf9f6`
   - Description: Retrieves a book by its ID from the database.
-- **Update a Book**: `PATCH /api/v1/books/100d03d0-154e-4e86-a9c9-71a2a3895fa9`
-- **Delete a Book**: `DELETE /api/v1/books/100d03d0-154e-4e86-a9c9-71a2a3895fa9`
+- **Update a Book**: `PATCH /api/v1/books/a212aa85-cb71-4995-aec6-d4cc23eaf9f6`
+- **Delete a Book**: `DELETE /api/v1/books/a212aa85-cb71-4995-aec6-d4cc23eaf9f6`
   - Description: Deletes a book by its ID from the database.
 
 ### Orders
 
 - **Create an Order**: `POST /api/v1/orders/create-order`
 - **Get All Orders**: `GET /api/v1/orders`
-- **Get a Single Order**: `GET /api/v1/orders/a3133273-1cd7-44cd-a87c-67c46840e5bd`
+- **Get a Single Order**: `GET /api/v1/orders/d091a453-1219-42fc-92fb-b2681f04dfea`
   - Description: Retrieves an order by its ID from the database.
 
 ### Bonus Part
 
-- **Get single order by Id**: `POST /api/v1/orders/a3133273-1cd7-44cd-a87c-67c46840e5bd`
+- **Get single order by Id**: `POST /api/v1/orders/d091a453-1219-42fc-92fb-b2681f04dfea`
 - **Get User Profile Data**: `GET /api/v1/users/profile`
 
 ## Usage

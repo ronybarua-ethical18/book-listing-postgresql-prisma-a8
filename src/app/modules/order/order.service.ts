@@ -25,11 +25,13 @@ const getAllOrders = async (loggedUser: any): Promise<Order[]> => {
 
 const getSingleOrder = async (
   orderId: string,
-  loggedUser: string
+  loggedUser: any
 ): Promise<Order | null> => {
-  const order = await prisma.order.findUnique({
-    where: { id: orderId, userId: loggedUser },
-  });
+  const queries =
+    loggedUser?.role === 'admin'
+      ? { where: { id: orderId } }
+      : { where: { id: orderId, userId: loggedUser?.userId } };
+  const order = await prisma.order.findUnique(queries);
   return order;
 };
 

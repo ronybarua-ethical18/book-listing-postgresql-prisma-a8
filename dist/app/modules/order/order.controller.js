@@ -26,7 +26,7 @@ const createOrder = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, vo
     });
 }));
 const getAllOrders = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield order_service_1.OrderService.getAllOrders();
+    const result = yield order_service_1.OrderService.getAllOrders(req.user);
     (0, sendResponse_1.default)(res, {
         statusCode: 200,
         success: true,
@@ -34,16 +34,16 @@ const getAllOrders = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, v
         data: result,
     });
 }));
-const getOrdersByCustomer = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const requesPayload = req.user;
-    const result = yield order_service_1.OrderService.getOrdersByCustomer(requesPayload.userId);
-    (0, sendResponse_1.default)(res, {
-        statusCode: 200,
-        success: true,
-        message: 'All orders fetched successfully',
-        data: result,
-    });
-}));
+// const getOrdersByCustomer = catchAsync(async (req: Request, res: Response) => {
+//   const requesPayload:any= req.user
+//   const result = await OrderService.getOrdersByCustomer(requesPayload.userId);
+//   sendResponse<Order[]>(res, {
+//     statusCode: 200,
+//     success: true,
+//     message: 'All orders fetched successfully',
+//     data: result,
+//   });
+// });
 const getSingleOrder = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const requesPayload = req.user;
     const result = yield order_service_1.OrderService.getSingleOrder(req.params.orderId, requesPayload.userId);
@@ -58,5 +58,5 @@ exports.default = {
     createOrder,
     getAllOrders,
     getSingleOrder,
-    getOrdersByCustomer
+    // getOrdersByCustomer
 };
